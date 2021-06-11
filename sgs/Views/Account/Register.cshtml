@@ -1,0 +1,112 @@
+﻿@model sgs.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+
+
+}
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-register-container">
+
+        <hr />
+        <p class="register--card-title">Datos Generales</p>
+        <h4 id="msg" class="text-success text-center">@ViewBag.Success</h4>
+        <div class="form-register-sections">
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.Name, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control datosGenerales" })
+                @Html.ValidationMessage("Name", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.Lastname, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.Lastname, new { @class = "form-control datosGenerales" })
+                @Html.ValidationMessage("Lastname", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.VoterKey, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.VoterKey, new { @class = "form-control datosGenerales long voterKey", pattern = "^[a-zA-Z]{6}[0-9]{8}[h|m|M|H][0-9]{3}$", id = "VoterKey" })
+                @Html.ValidationMessage("VoterKey", new { @class = "text-danger" })
+                <p class="text-danger" id="voterKeyDuplicated" />
+            </div>
+            <div class="form-group controles">
+                <label class="form-register-container__label">Rol:</label>
+                @Html.DropDownList("Role", new SelectList(ViewBag.roles, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessage("Role", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles" id="visibleOnSeccional">
+                <label class="form-register-container__label">Sección a supervisar:</label>
+                @Html.TextBoxFor(m => m.Seccional, new { @class = "form-control datosGenerales short", id = "seccional" })
+            </div>
+        </div>
+        <hr />
+        <p class="register--card-title">Contacto</p>
+        <div class="form-register-sections">
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.Email, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control long", id = "email" })
+                @Html.ValidationMessage("Email", new { @class = "text-danger" })
+                <p class="text-danger" id="emailDuplicated" />
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.phoneNumber, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.phoneNumber, new { @class = "form-control datosGenerales phone", id = "phone", maxlength = "12" })
+                @Html.ValidationMessage("phoneNumber", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+        <p class="register--card-title">Dirección</p>
+        <div class="form-register-sections">
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.Street, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.Street, new { @class = "form-control datosGenerales long" })
+                @Html.ValidationMessage("Street", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.NumExt, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.NumExt, new { @class = "form-control datosGenerales short" })
+                @Html.ValidationMessage("NumExt", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.NumInt, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.NumInt, new { @class = "form-control datosGenerales short" })
+                @Html.ValidationMessage("NumInt", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                @Html.LabelFor(m => m.Seccion, new { @class = "form-register-container__label" })
+                @Html.TextBoxFor(m => m.Seccion, new { @class = "form-control short", onkeypress = "return onlyNumberKey(event)", maxlength = "5", id = "section" })
+                @Html.ValidationMessage("Seccion", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                <label class="form-register-container__label">Distrito:</label>
+                <input id="distrito" class="form-control" readonly />
+            </div>
+            <div class="form-group controles">
+                <label class="form-register-container__label">Municipio:</label>
+                <input id="municipio" class="form-control" readonly />
+            </div>
+            <div class="form-group controles">
+                <label class="form-register-container__label">Colonia:</label>
+                <select id="colonia" class="form-control" />
+                @Html.HiddenFor(m => m.Suburb, new { @id = "suburb" })
+                @Html.ValidationMessage("Suburb", new { @class = "text-danger" })
+            </div>
+            <div class="form-group controles">
+                <label class="form-register-container__label">Código Postal:</label>
+                <select id="codigoPostal" class="form-control" style="width:130px" />
+                @Html.HiddenFor(m => m.PostalCode, new { @id = "postalCode" })
+                @Html.ValidationMessage("PostalCode", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="boton-guardar-registro">
+            <input type="submit" class="btn btn-success btn-guardar-registro" value="Guardar" />
+        </div>
+    </div>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

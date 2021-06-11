@@ -1,0 +1,179 @@
+﻿@model SistemaGestionSimpatizantes.Models.Repository.Infrastructure.PaginadorGenerico<SistemaGestionSimpatizantes.Models.ApplicationUser>
+@using Microsoft.AspNet.Identity.EntityFramework;
+@{
+    ViewBag.Title = "Mis Registros";
+}
+
+<div class="table-container">
+    @{
+        if (ViewBag.Usuario != null)
+        {
+            <div>
+                <h4>Hola <b>@ViewBag.Usuario.FirstName</b> haz registrado a <b>@Model.TotalRegistros</b> personas</h4>
+                @foreach (var item in ViewBag.DatosGenerales)
+                {
+                    <p>@item.Item1 : @item.Item2</p>
+                }
+            </div>
+        }
+    }
+    <h4 id="msg" class="text-success text-center">@ViewBag.Success</h4>
+    <h4 id="msg" class="text-success text-center">@ViewBag.Error</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Rol
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th class="esconder">
+                    Clave de Elector
+                </th>
+                <th class="esconder">
+                    Email
+                </th>
+                <th class="esconder">
+                    Distrito
+                </th>
+                <th class="esconder">
+                    Municipio
+                </th>
+                <th class="esconder">
+                    Seccion
+                </th>
+                @if (DateTime.Today == DateTime.Parse("06-06-2021"))
+                {
+                    <th>
+                        Revisado
+                    </th>
+                }
+
+                @if (User.IsInRole("Sudo"))
+                {
+                    <th>
+                        Opciones
+                    </th>
+                }
+            </tr>
+        </thead>
+        @foreach (var item in Model.Resultado)
+        {
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        @{
+                            var roles = ViewBag.roles as List<IdentityRole>;
+                            @roles.Where(c => c.Id == item.Roles.FirstOrDefault().RoleId).FirstOrDefault().Name;
+                        }
+                    </td>
+                    <td style="display: none; visibility: hidden;">
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td class="datosGeneralesList">
+                        <a href="@Url.Action("MisRegistros","Listados",new { id =  item.Id, opcion ="MisRegistros" })">
+                            @Html.DisplayFor(modelItem => item.LastName) @Html.DisplayFor(modelItem => item.FirstName, new { id = "lastnameList" })
+                        </a>
+                    </td>
+                    <td class="esconder">
+                        @Html.DisplayFor(modelItem => item.VoterKey, new { id = "voterkeyList" })
+                    </td>
+                    <td class="esconder">
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td class="esconder">
+                        @Html.DisplayFor(modelItem => item.Addresses.FirstOrDefault().Suburb.Municipality.District.DistrictName)
+                    </td>
+                    <td class="esconder">
+                        @Html.DisplayFor(modelItem => item.Addresses.FirstOrDefault().Suburb.Municipality.MunicipalityName)
+                    </td>
+                    <td class="esconder">
+                        @Html.DisplayFor(modelItem => item.Addresses.FirstOrDefault().Seccion)
+                    </td>
+                    @if (DateTime.Today == DateTime.Parse("06-06-2021"))
+                    {
+                        <td>
+                            @{
+                                if (item.IsChecked == false)
+                                {
+                                    @Html.ActionLink("No revisado", "ChangeStatus", new { id = item.Id })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("revisado", "ChangeStatus", new { id = item.Id })
+                                }
+
+                            }
+
+                        </td>
+                    }
+
+                    @if (User.IsInRole("Sudo"))
+                    {
+                        <td>
+                            <a href="@Url.Action("ResetPwd","Component",new { id =  item.Id})">
+                                Resetear PWD
+                            </a>
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        }
+    </table>
+
+    @if (Model.Resultado.Count() > 0)
+    {
+        <span>
+            <strong>@Model.TotalRegistros</strong> registros totales
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            Página <strong>@(Model.PaginaActual)</strong> de
+            <strong>@Model.TotalPaginas</strong>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+    }
+    else
+    {
+        <span>No hay resultados para esta búsqueda</span>
+        <span>&nbsp;|&nbsp;</span>
+    }
+
+    @if (Model.PaginaActual > 1)
+    {
+        @Html.ActionLink("<<", "MisRegistros", new { pagina = 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink("Anterior", "MisRegistros", new { pagina = Model.PaginaActual - 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("<<", "MisRegistros", new { pagina = 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink("Anterior", "MisRegistros", new { pagina = 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+    <span></span>
+    @if (Model.PaginaActual < Model.TotalPaginas)
+    {
+        @Html.ActionLink("Siguiente", "MisRegistros", new { pagina = Model.PaginaActual + 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default" })
+        <span></span>
+        @Html.ActionLink(">>", "MisRegistros", new { pagina = Model.TotalPaginas, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default" })
+    }
+    else
+    {
+        @Html.ActionLink("Siguiente", "Index", new { pagina = Model.TotalPaginas - 1, opcion = ViewBag.opcion, id = ViewBag.id },
+                        new { @class = "btn btn-sm btn-default disabled" })
+        <span></span>
+        @Html.ActionLink(">>", "Index", new { pagina = Model.TotalPaginas },
+                        new { @class = "btn btn-sm btn-default disabled" })
+    }
+</div>
+

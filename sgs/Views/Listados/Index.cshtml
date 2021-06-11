@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="dashboard-user-Container">
+    @foreach (var item in ViewBag.dashboard)
+    {
+
+        <div class="dashboard-user-Container--card">
+            <a href="@Url.Action("index","Listados",new { id =  ViewBag.userId, opcion = item.Item3 })">
+                <p class="dashboard--card-title">@item.Item1</p>
+                <p class="product--card-body">
+                    @item.Item2
+                </p>
+            </a>
+        </div>
+    }
+    @if (User.IsInRole("Admin") || User.IsInRole("Sudo"))
+    {
+        <div class="dashboard-user-Container--card">
+            <a href="@Url.Action("ExportToExcel","Component")">
+                <p class="dashboard--card-title">Descargar información</p>
+            </a>
+        </div>
+    }
+
+</div>
+
+
+
+

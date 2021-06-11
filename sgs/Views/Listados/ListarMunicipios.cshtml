@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Municipio";
+}
+
+<div class="table-container">
+    <table class="table">
+        <tr>
+            <th>
+                Municipio
+            </th>
+            <th class="esconder">
+                Administradores
+            </th>
+            <th class="esconder">
+                Distritales
+            </th>
+            <th class="esconder">
+                Municipales
+            </th>
+            <th class="esconder">
+                Seccionales
+            </th>
+            <th class="esconder">
+                Manzana
+            </th>
+            <th class="esconder">
+                Activista
+            </th>
+            <th class="esconder">
+                Promovidos
+            </th>
+            <th>
+                Totales
+            </th>
+        </tr>
+
+        @foreach (var item in @ViewBag.model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("MisRegistros","Listados",new { opcion ="RegistrosMunicipios", idMunicipioSeleccionado =  @item.Item1 })">
+                        @item.Item2
+                    </a>
+                </td>
+                <td class="esconder">
+                    @item.Item3
+                </td>
+                <td class="esconder">
+                    @item.Item4
+                </td>
+                <td class="esconder">
+                    @item.Item5
+                </td>
+                <td class="esconder">
+                    @item.Item6
+                </td>
+                <td class="esconder">
+                    @item.Item7
+                </td>
+                <td class="esconder">
+                    @item.Item8
+                </td>
+                <td class="esconder">
+                    @item.Item9
+                </td>
+                <td>
+                    @(@item.Item3 + @item.Item4 + @item.Item5 + @item.Item6 + @item.Item7 + @item.Item8 + @item.Item9)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

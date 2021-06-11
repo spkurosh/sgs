@@ -1,0 +1,186 @@
+﻿/*
+    1. Posicionamiento
+    2. Módelo Caja (box model)
+    3. Tipografía
+    4. Visuales
+    5. Otros
+*/
+:root {
+    /*Colores*/
+    --black: #1b262c;
+    --off-white: #faf8f7;
+    --just-white: #fff;
+    --prussian-blue: #0B3C5D;
+    --sky-blue: #328CC1;
+    --gold-leaf: #D9B310;
+    --ivory-black: #1D2731;
+}
+
+body {
+    background-color: var(--off-white);
+}
+
+.navbar {
+    background-color: var(--prussian-blue);
+}
+
+.navbar-brand {
+    font-size: 2.4rem;
+    font-weight: bold;
+    line-height: 2.2rem;
+    color: var( --off-white) !important;
+}
+
+.nav .navbar-nav {
+    font-size: 2.4rem;
+    font-weight: bold;
+    line-height: 2.2rem;
+    color: var( --off-white) !important;
+}
+
+.navbar-inverse .navbar-toggle {
+    background-color: transparent !important;
+}
+
+.form-register-container {
+    display: block;
+    width: 100%;
+    margin-top: 80px;
+    border-radius: 15px;
+    background-color: var(--just-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+.register--card-title {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    width: 100%;
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+    color: var(--ivory-black);
+}
+
+.form-register-container .form-register-sections {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.form-register-sections .controles {
+    margin-left: 20px;
+    margin-right: 30px;
+    min-width: 200px;
+}
+
+.datosGenerales {
+    width: 150px;
+    text-transform: capitalize;
+}
+
+.long {
+    width: 250px;
+}
+
+.short {
+    width: 70px;
+}
+
+.voterKey {
+    width: 200px;
+    text-transform: uppercase;
+}
+
+.boton-guardar-registro {
+    display: flex;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
+    height: 60px;
+}
+
+.btn-guardar-registro {
+    position: absolute;
+    right: 30px;
+    top: 0px;
+}
+
+.dashboard-user-Container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+    padding-top: 50px;
+    border-radius: 15px;
+    background-color: var(--just-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+    .dashboard-user-Container .dashboard-user-Container--card {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 15px;
+        padding: 15px;
+        background-color: var(--off-white);
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+        text-align: center;
+    }
+
+.dashboard-user-Container--card .dashboard--card-title {
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.8rem;
+    color: var(--ivory-black);
+}
+
+.dashboard-user-Container--card a {
+    text-decoration: none;
+    color: var(--ivory-black);
+}
+
+.dashboard-user-Container--card .product--card-body {
+    margin-bottom: 10px;
+    padding-top: 20px;
+    font-size: 4.8rem;
+    font-weight: bold;
+    line-height: 2.2rem;
+    color: var(--ivory-black);
+}
+
+.table-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+    padding-top: 50px;
+    border-radius: 15px;
+    background-color: var(--just-white);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+.datosGeneralesList {
+    text-transform: capitalize;
+}
+
+.link-descarga {
+    position: relative;
+}
+
+    .link-descarga p {
+        position: absolute;
+        top: 130px;
+    }
+
+@media (max-width: 720px) {
+    .esconder {
+        display: none;
+        visibility: hidden;
+    }
+}
